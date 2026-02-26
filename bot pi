@@ -1,0 +1,49 @@
+from twitchio.ext import commands
+import datetime
+import asyncio
+
+from config import TOKEN, BOT_NICK, CHANNEL
+import commands as cmds
+from database import setup
+
+class Bot(commands.Bot):
+
+    def __init__(self):
+        super().__init__(
+            token=TOKEN,
+            prefix="!",
+            initial_channels=[CHANNEL]
+        )
+        self.start_time = datetime.datetime.now()
+
+    async def event_ready(self):
+        print(f"Logged in as {self.nick}")
+        await setup()
+
+    @commands.command()
+    async def discord(self, ctx):
+        await cmds.discord(ctx)
+
+    @commands.command()
+    async def lurk(self, ctx):
+        await cmds.lurk(ctx)
+
+    @commands.command()
+    async def points(self, ctx):
+        await cmds.points(ctx)
+
+    @commands.command()
+    async def steal(self, ctx):
+        await cmds.steal(ctx)
+
+    @commands.command()
+    async def song(self, ctx):
+        await cmds.song(ctx)
+
+    @commands.command()
+    async def uptime(self, ctx):
+        delta = datetime.datetime.now() - self.start_time
+        await ctx.send(f"Stream uptime: {str(delta).split('.')[0]}")
+
+bot = Bot()
+bot.run()
