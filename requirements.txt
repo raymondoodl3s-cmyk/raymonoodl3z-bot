@@ -1,0 +1,5 @@
+twitchio==2.8.2
+aiosqlite
+python-dotenv
+requests
+openai
